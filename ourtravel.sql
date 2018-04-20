@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Waktu pembuatan: 18. April 2018 jam 10:19
+-- Waktu pembuatan: 20. April 2018 jam 06:28
 -- Versi Server: 5.5.16
 -- Versi PHP: 5.3.8
 
@@ -52,7 +52,11 @@ CREATE TABLE IF NOT EXISTS `reservation` (
   `depart_at` varchar(50) DEFAULT NULL,
   `price` varchar(50) DEFAULT NULL,
   `userid` int(10) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`),
+  UNIQUE KEY `customerid` (`customerid`),
+  UNIQUE KEY `ruteid` (`ruteid`),
+  UNIQUE KEY `userid` (`userid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -68,7 +72,8 @@ CREATE TABLE IF NOT EXISTS `rute` (
   `rute_to` varchar(50) DEFAULT NULL,
   `price` varchar(50) DEFAULT NULL,
   `transportationid` int(10) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `transportationid` (`transportationid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -83,7 +88,8 @@ CREATE TABLE IF NOT EXISTS `transportation` (
   `description` varchar(50) DEFAULT NULL,
   `seat_qty` int(10) DEFAULT NULL,
   `transportationtype_id` int(10) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `transportationtype_id` (`transportationtype_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -112,6 +118,40 @@ CREATE TABLE IF NOT EXISTS `user` (
   `level` varchar(5) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+--
+
+--
+-- Ketidakleluasaan untuk tabel `customer`
+--
+ALTER TABLE `customer`
+  ADD CONSTRAINT `customer_ibfk_1` FOREIGN KEY (`id`) REFERENCES `reservation` (`customerid`);
+
+--
+-- Ketidakleluasaan untuk tabel `rute`
+--
+ALTER TABLE `rute`
+  ADD CONSTRAINT `rute_ibfk_1` FOREIGN KEY (`id`) REFERENCES `reservation` (`ruteid`);
+
+--
+-- Ketidakleluasaan untuk tabel `transportation`
+--
+ALTER TABLE `transportation`
+  ADD CONSTRAINT `transportation_ibfk_1` FOREIGN KEY (`id`) REFERENCES `rute` (`transportationid`);
+
+--
+-- Ketidakleluasaan untuk tabel `transportation_type`
+--
+ALTER TABLE `transportation_type`
+  ADD CONSTRAINT `transportation_type_ibfk_1` FOREIGN KEY (`id`) REFERENCES `transportation` (`transportationtype_id`);
+
+--
+-- Ketidakleluasaan untuk tabel `user`
+--
+ALTER TABLE `user`
+  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`id`) REFERENCES `reservation` (`userid`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
