@@ -4,7 +4,7 @@
 	<title>Form Input User</title>
 </head>
 <body>
-		<form action="../user/add" method="post">
+		<form action="../user/update" method="post">
 			Username 
 			<br>
 			<input type="text" name="username">

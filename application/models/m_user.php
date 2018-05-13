@@ -6,30 +6,32 @@
 class M_user extends CI_model
 {
 	
-	/*public function gets(f)
+	public function gets()
 	{
-		# code...
+		return $this->db->get('user');
 	}
 
-	public function get(f)
+	public function get($where,$table)
 	{
-		# code...
-	}*/
+		return $this->db->get_where($table,$where);
+	}
 
 	public function add($data)
 	{
 		$this->db->insert("user", $data);
 	}
 
-	/*public function edit(f)
+	public function edit()
 	{
-		# code...
+		$this->db->where($where);
+		$this->db->update($table,$data);
 	}
 
-	public function delete(f)
+	public function delete()
 	{
-		# code...
-	}*/
+		$this->db->where($where);
+		$this->db->delete($table);
+	}
 }
 
 
